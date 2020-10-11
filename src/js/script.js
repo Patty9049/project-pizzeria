@@ -1,7 +1,7 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
 {
-  'use strict';
+  ('use strict');
 
   const select = {
     templateOf: {
@@ -45,11 +45,13 @@
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
-    }
+    },
   };
 
   const templates = {
-    menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
+    menuProduct: Handlebars.compile(
+      document.querySelector(select.templateOf.menuProduct).innerHTML
+    ),
   };
 
   class Product {
@@ -60,6 +62,7 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
+      thisProduct.initAccordion();
 
       console.log('new Product:', thisProduct);
     }
@@ -73,8 +76,33 @@
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
       /* find menu container */
       const menuContainer = document.querySelector(select.containerOf.menu);
-      /* add element to menu */
+      /* add element to menu se*/
       menuContainer.appendChild(thisProduct.element);
+    }
+
+    initAccordion() {
+      const thisProduct = this;
+
+      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      console.log('clickableTrigger:', clickableTrigger);
+
+      clickableTrigger.addEventListener('click', function (event) {
+        console.log('clicked');
+        event.preventDefault;
+
+        thisProduct.element.classList.toggle('active');
+
+        const activeProducts = document.querySelectorAll(classNames.menuProduct.wrapperActive);
+
+        console.log('activeProducts:', activeProducts);
+
+        for (let activePruduct of activeProducts) {
+          if (activePruduct != this) {
+
+            activePruduct.classList.toggle('.active');
+          }
+        }
+      });
     }
   }
 
@@ -85,7 +113,7 @@
       console.log('thisApp.data:', thisApp.data);
 
       for (let productData in thisApp.data.products) {
-        new Product(productData, thisApp.data.products[productData])
+        new Product(productData, thisApp.data.products[productData]);
       }
     },
 
