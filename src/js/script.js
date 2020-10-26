@@ -64,8 +64,8 @@
       thisProduct.renderInMenu();
       thisProduct.getElements();
       thisProduct.initAccordion();
-      thisProduct.initOrderForm();
-      thisProduct.processOrder();
+      //thisProduct.initOrderForm();
+      //thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
     }
@@ -112,20 +112,21 @@
         for (let activePruduct of activeProducts) {
           if (activePruduct != this) {
 
-            activePruduct.classList.toggle('.active');
+            activePruduct.classList.toogle('.active');
           }
         }
       });
     }
-    initOrderForm() {
+   /* initOrderForm() {
       const thisProduct = this;
       console.log('initOrderForm');
     }
-    
+
     processOrder() {
       const thisProduct = this;
       console.log('processOrder');
     }
+    */
 
   }
 
