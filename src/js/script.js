@@ -98,7 +98,7 @@
         const activeProducts = document.getElementsByClassName('product' + 'active');
         //console.log('activeProducts:', activeProducts);
         for (let activePruduct of activeProducts) {
-          activePruduct.classList.toogle('active');
+          activePruduct.classList.toggle('active');
         }
         thisProduct.element.classList.toggle('active');
       });
@@ -138,24 +138,41 @@
         const options = param.options;
         for(let optionId in options){
           const option = param.options[optionId];
-          //console.log('OPCJA:', option);
+          console.log('PRODUCT-OPTION:', option);
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           if(optionSelected && !option.default){
             productPrice += option.price;
           } else if (!optionSelected && option.default) {
             productPrice -= option.price;
           }
-          if(optionSelected){
-            //let imgSelector = option.querySelectorAll(`img .${param}-${option}`);
-            //const allImages = thisProduct.imageWrapper.querySelectorAll(imgSelector);
-            //console.log('ALL-IMAGES:', allImages);
+          /* WIDOCZNOŚĆ OBRAZKÓW */
+
+          if(optionSelected ){
+            for(let key in options){
+              console.log('product-option-KEY:', key);
+              const optKey = key;
+              const imgSelector = '.' + paramId + '-' + optKey;
+              console.log('imgSelector:', imgSelector);
+              const image = thisProduct.imageWrapper.querySelector(imgSelector);
+              console.log('IMAGE:', image);
+              /* if(optionSelected && image !== null){
+                //pojawił się kimunikat ze dla wartości null nie mozna smieniać klasy
+                image.classList.add('active');
+                console.log('IMAGE-ACTICE:', image);
+              } else if(image !== null){
+                image.classList.remove('active');
+              }*/
+              if(optionSelected && image !== null){
+                image.classList.add('active');
+              } else if (!optionSelected && image !== null) {
+                image.classList.remove('active');
+              }
+            }
+
           }
         }
       }
       const totalPrice = thisProduct.element.getElementsByClassName('product__total-price price');
-      console.log('TYPE-OF__TOTAL-PRICE:',typeof(totalPrice));
-      console.log(totalPrice);
-      console.log('PP:', productPrice);
       totalPrice.innerHTML = '';
       thisProduct.priceElem.innerHTML = productPrice;
       
