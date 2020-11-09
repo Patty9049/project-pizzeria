@@ -42,7 +42,7 @@
 
   const settings = {
     amountWidget: {
-      defaultValue: 1,
+      defaultValue: 5,
       defaultMin: 1,
       defaultMax: 9,
     },
@@ -55,8 +55,7 @@
   };
 
   class Product {
-    constructor(id, data) {
-      const thisProduct = this;
+    constructor(id, data) {      const thisProduct = this;
 
       thisProduct.id = id;
       thisProduct.data = data;
@@ -65,7 +64,7 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
-      //thisProduct.initAmountWidget();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
@@ -132,13 +131,13 @@
       const params = thisProduct.data.params;
       //console.log('PRODUCT-PARAMS:', params);
       for(let paramId in params) {
-        console.log('ID:', paramId);
+        //console.log('ID:', paramId);
         const param = params[paramId];
-        console.log('PRODUCT-PARAM:', param);
+        //console.log('PRODUCT-PARAM:', param);
         const options = param.options;
         for(let optionId in options){
           const option = param.options[optionId];
-          console.log('PRODUCT-OPTION:', option);
+          //console.log('PRODUCT-OPTION:', option);
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           if(optionSelected && !option.default){
             productPrice += option.price;
@@ -149,22 +148,22 @@
 
           if(optionSelected ){
             for(let key in options){
-              console.log('product-option-KEY:', key);
+              //console.log('product-option-KEY:', key);
               const optKey = key;
               const imgSelector = '.' + paramId + '-' + optKey;
-              console.log('imgSelector:', imgSelector);
+              //console.log('imgSelector:', imgSelector);
               const image = thisProduct.imageWrapper.querySelector(imgSelector);
-              console.log('IMAGE:', image);
+              //console.log('IMAGE:', image);
               /* if(optionSelected && image !== null){
-                //pojawił się kimunikat ze dla wartości null nie mozna smieniać klasy
+                //pojawił się kimunikat ze dla wartości null nie mozna zmieniać klasy
                 image.classList.add('active');
                 console.log('IMAGE-ACTICE:', image);
               } else if(image !== null){
                 image.classList.remove('active');
               }*/
-              if(optionSelected && image !== null){
+              if(optionSelected && image !== null && formData[paramId].indexOf(optionId) > -1){
                 image.classList.add('active');
-              } else if (!optionSelected && image !== null) {
+              } else if (!optionSelected && image !== null){
                 image.classList.remove('active');
               }
             }
@@ -174,22 +173,30 @@
       }
       const totalPrice = thisProduct.element.getElementsByClassName('product__total-price price');
       totalPrice.innerHTML = '';
+      console.log('PRODUCT-PRICE:', productPrice);
+      productPrice *= thisProduct.amountWidget.value;
+      console.log('PRODUCT-PRICE:', productPrice);
       thisProduct.priceElem.innerHTML = productPrice;
-      
+      totalPrice.innerHTML = productPrice;
     }
-    //<--------------ODBLOKUJ WIDGET
-    /*initAmountWidget() {
+    initAmountWidget() {
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       console.log('New AmountWgdet:', thisProduct);
-    }*/
+      thisProduct.amountWidgetElem.addEventListener('announce', function(){
+        thisProduct.processOrder();
+      });
+    }
   }
 
-  /*class AmountWidget {
+  class AmountWidget {
     constructor(element){
       const thisWidget = this;
+      thisWidget.value = settings.amountWidget.defaultValue;
+      
       thisWidget.getElements(element);
+      thisWidget.value = settings.amountWidget.defaultValue;  //<--- wartość inputa 1 nie działa;pobiera warosc z HTML'a
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
 
@@ -205,12 +212,20 @@
     }
     setValue(value){
       const thisWidget = this;
+      console.log('thisWidget-VALUE-VALUE---------------------->', thisWidget);
       const newValue = parseInt(value);
 
-      //VALIDATION
-
-      thisWidget.value = newValue;
+      //VALIDATION - po dodamiu walidacji i usunięciu atrybutu value=1 z HTML'a nie pokazuje ceny tylko NaN.
+      if(thisWidget.input.value !== thisWidget.value && thisWidget.input.value >= settings.amountWidget.defaultMin && thisWidget.input.value <= settings.amountWidget.defaultMax){
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
       thisWidget.input.value = thisWidget.value;
+    }
+    announce(){
+      const thisWidget = this;
+      const event = new Event ('updated');
+      thisWidget.element.dispatchEvent(event);
     }
     initActions(){
       const thisWidget = this;
@@ -219,14 +234,15 @@
         event.preventDefault();
         thisWidget.setValue(thisWidget.value - 1);
       });
-      thisWidget.linkIncrease.addEventListener('click', function(event){
+      thisWidget.linkIncrease.addEventListener('click',function(event){
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
+        console.log('thisWidget-Value:', thisWidget.value)
       });
       const value = thisWidget.value;
       console.log('WIDGET VALUE:', value);
     }
-  }*/
+  }
 
   const app = {
     initMenu: function () {
