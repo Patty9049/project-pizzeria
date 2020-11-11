@@ -123,7 +123,7 @@
         const activeProducts = document.getElementsByClassName('product ' + 'active');
         for (let activePruduct of activeProducts) {
           if(activePruduct!=thisProduct.element)
-          activePruduct.classList.remove('active');
+            activePruduct.classList.remove('active');
         }
       });
     }
@@ -147,8 +147,8 @@
 
     processOrder() {
       const thisProduct = this;
-      //console.log('processOrder');
-      //console.log(thisProduct)
+      console.log('processOrder');
+      console.log(thisProduct)
       const formData = utils.serializeFormToObject(thisProduct.form);
       //console.log('formData', formData);
       let productPrice = thisProduct.data.price;
@@ -183,9 +183,11 @@
       }
       const totalPrice = thisProduct.element.getElementsByClassName('product__total-price price');
       totalPrice.innerHTML = '';
-      //console.log('PRODUCT-PRICE:', productPrice);
+      totalPrice.innerHTML = productPrice;
+      console.log('PRODUCT-PRICE:', productPrice);
       productPrice *= thisProduct.amountWidget.value;
-      //console.log('PRODUCT-PRICE:', productPrice);
+      totalPrice.innerHTML = productPrice;
+      console.log('PRODUCT-PRICE:', productPrice);
       thisProduct.priceElem.innerHTML = productPrice;
       totalPrice.innerHTML = productPrice;
     }
@@ -194,7 +196,7 @@
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       //console.log('New AmountWgdet:', thisProduct);
-      thisProduct.amountWidgetElem.addEventListener('announce', function(){
+      thisProduct.amountWidgetElem.addEventListener('updated', function(){
         thisProduct.processOrder();
       });
     }
@@ -205,9 +207,10 @@
     constructor(element){
       const thisWidget = this;
       thisWidget.value = settings.amountWidget.defaultValue;
+
       thisWidget.getElements(element);
-      thisWidget.value = settings.amountWidget.defaultValue;  //<--- wartość inputa 1 nie działa;pobiera warosc z HTML'a
-      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.input.value = settings.amountWidget.defaultValue;  //<--- wartość inputa 1 nie działa;pobiera warosc z HTML'a
+      thisWidget.setValue(1);
       thisWidget.initActions();
 
       //console.log('AmountWidget:', thisWidget);
@@ -226,11 +229,11 @@
       const newValue = parseInt(value);
 
       //VALIDATION - po dodamiu walidacji i usunięciu atrybutu value=1 z HTML'a nie pokazuje ceny tylko NaN.
-      if(thisWidget.input.value !== thisWidget.value && thisWidget.input.value >= settings.amountWidget.defaultMin && thisWidget.input.value <= settings.amountWidget.defaultMax){
+      if(newValue !== thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
         thisWidget.value = newValue;
         thisWidget.announce();
+        thisWidget.input.value = thisWidget.value;
       }
-      thisWidget.input.value = thisWidget.value;
     }
     announce(){
       const thisWidget = this;
@@ -249,8 +252,8 @@
         thisWidget.setValue(thisWidget.value + 1);
         //console.log('thisWidget-Value:', thisWidget.value)
       });
-      const value = thisWidget.value;
-      console.log('WIDGET VALUE:', value);
+      // const value = thisWidget.value;
+      //console.log('WIDGET VALUE:', value);
     }
   }
 
