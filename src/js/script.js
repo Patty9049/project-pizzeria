@@ -119,12 +119,12 @@
       thisProduct.accordionTrigger.addEventListener('click', function (event) {
         //console.log('clicked');
         event.preventDefault();
-        const activeProducts = document.getElementsByClassName('product' + 'active');
-        //console.log('activeProducts:', activeProducts);
-        for (let activePruduct of activeProducts) {
-          activePruduct.classList.toggle('active');
-        }
         thisProduct.element.classList.toggle('active');
+        const activeProducts = document.getElementsByClassName('product ' + 'active');
+        for (let activePruduct of activeProducts) {
+          if(activePruduct!=thisProduct.element)
+          activePruduct.classList.remove('active');
+        }
       });
     }
     initOrderForm() {
@@ -160,39 +160,24 @@
         const param = params[paramId];
         //console.log('PRODUCT-PARAM:', param);
         const options = param.options;
-        for(let optionId in options){
+        for(let optionId in options) {
           const option = param.options[optionId];
           //console.log('PRODUCT-OPTION:', option);
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
-          if(optionSelected && !option.default){
+          if (optionSelected && !option.default) {
             productPrice += option.price;
           } else if (!optionSelected && option.default) {
             productPrice -= option.price;
           }
           /* WIDOCZNOŚĆ OBRAZKÓW */
-
-          if(optionSelected ){
-            for(let key in options){
-              //console.log('product-option-KEY:', key);
-              const optKey = key;
-              const imgSelector = '.' + paramId + '-' + optKey;
-              //console.log('imgSelector:', imgSelector);
-              const image = thisProduct.imageWrapper.querySelector(imgSelector);
-              //console.log('IMAGE:', image);
-              /* if(optionSelected && image !== null){
-                //pojawił się kimunikat ze dla wartości null nie mozna zmieniać klasy
-                image.classList.add('active');
-                console.log('IMAGE-ACTICE:', image);
-              } else if(image !== null){
-                image.classList.remove('active');
-              }*/
-              if(optionSelected && image !== null && formData[paramId].indexOf(optionId) > -1){
-                image.classList.add('active');
-              } else if (!optionSelected && image !== null){
-                image.classList.remove('active');
-              }
+          const imgSelector = '.' + paramId + '-' + optionId;
+          const image = thisProduct.imageWrapper.querySelector(imgSelector);
+          if (image) {
+            if (optionSelected) {
+              image.classList.add('active');
+            } else {
+              image.classList.remove('active');
             }
-
           }
         }
       }
@@ -213,13 +198,13 @@
         thisProduct.processOrder();
       });
     }
+    addToCart(){}
   }
 
   class AmountWidget {
     constructor(element){
       const thisWidget = this;
       thisWidget.value = settings.amountWidget.defaultValue;
-      
       thisWidget.getElements(element);
       thisWidget.value = settings.amountWidget.defaultValue;  //<--- wartość inputa 1 nie działa;pobiera warosc z HTML'a
       thisWidget.setValue(thisWidget.input.value);
@@ -265,7 +250,7 @@
         //console.log('thisWidget-Value:', thisWidget.value)
       });
       const value = thisWidget.value;
-      //console.log('WIDGET VALUE:', value);
+      console.log('WIDGET VALUE:', value);
     }
   }
 
@@ -293,7 +278,13 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function(event){
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
-      })
+      });
+    }
+    add(menuProduct){
+      //const thisCart = this;
+
+
+      console.log('adding product', menuProduct);
     }
   }
 
