@@ -1,5 +1,7 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
+//const { utils } = require("stylelint");
+
 {
   ('use strict');
 
@@ -79,7 +81,7 @@
   };
 
   class Product {
-    constructor(id, data) {     
+    constructor(id, data) {
       const thisProduct = this;
 
       thisProduct.id = id;
@@ -142,15 +144,21 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
     processOrder() {
       const thisProduct = this;
-      console.log('processOrder');
-      console.log(thisProduct)
+      //console.log('processOrder');
+      //console.log(thisProduct);
       const formData = utils.serializeFormToObject(thisProduct.form);
       //console.log('formData', formData);
+
+      thisProduct.params = {};
+      //console.log('thisProduct.params:', thisProduct.params)
+
+
       let productPrice = thisProduct.data.price;
       //console.log('PRODUCT-PRICE:', productPrice);
       const params = thisProduct.data.params;
@@ -174,6 +182,13 @@
           const image = thisProduct.imageWrapper.querySelector(imgSelector);
           if (image) {
             if (optionSelected) {
+              if(!thisProduct.params[paramId]){
+                thisProduct.params[paramId] = {
+                  label: param.label,
+                  options: {},
+                };
+              }
+              thisProduct.params[paramId].options[optionId] = option.label;
               image.classList.add('active');
             } else {
               image.classList.remove('active');
@@ -184,12 +199,24 @@
       const totalPrice = thisProduct.element.getElementsByClassName('product__total-price price');
       totalPrice.innerHTML = '';
       totalPrice.innerHTML = productPrice;
-      console.log('PRODUCT-PRICE:', productPrice);
-      productPrice *= thisProduct.amountWidget.value;
-      totalPrice.innerHTML = productPrice;
-      console.log('PRODUCT-PRICE:', productPrice);
-      thisProduct.priceElem.innerHTML = productPrice;
-      totalPrice.innerHTML = productPrice;
+
+
+      //console.log('PRODUCT-PRICE:', productPrice);
+      //productPrice *= thisProduct.amountWidget.value;
+      //totalPrice.innerHTML = productPrice;
+      //console.log('PRODUCT-PRICE:', productPrice);
+      //thisProduct.priceElem.innerHTML = productPrice;
+      //totalPrice.innerHTML = productPrice;
+
+      /* CENA DO KOSZYKA*/
+
+      /* multiply price by amount */
+      thisProduct.priceSingle = productPrice;
+      thisProduct.productPrice = thisProduct.priceSingle * thisProduct.amountWidget.value;
+
+      /* set the contents of thisProduct.priceElem to be the value of variable price */
+      thisProduct.priceElem.innerHTML = thisProduct.productPrice;
+      thisProduct.price = thisProduct.productPrice;
     }
     initAmountWidget() {
       const thisProduct = this;
@@ -200,7 +227,16 @@
         thisProduct.processOrder();
       });
     }
-    addToCart(){}
+    addToCart(){
+      const thisProduct = this;
+
+      thisProduct.name = thisProduct.data.name;
+      thisProduct.amount = thisProduct.amountWidget.value;
+
+      console.log('thisProduct:', thisProduct);
+
+      app.cart.add(thisProduct);
+    }
   }
 
   class AmountWidget {
@@ -274,6 +310,7 @@
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = document.querySelector(select.cart.productList);
     }
     initActions(){
       const thisCart = this;
@@ -283,11 +320,17 @@
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
-    add(menuProduct){
-      //const thisCart = this;
 
+    add(menuProduct){
+      const thisCart = this;
+
+      const generatedHTML = templates.cartProduct(menuProduct);
+      thisCart.element = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(thisCart.element);
 
       console.log('adding product', menuProduct);
+      console.log('thisCART:', thisCart);
+      console.log('PRODUCTList:', thisCart.dom.productList);
     }
   }
 
