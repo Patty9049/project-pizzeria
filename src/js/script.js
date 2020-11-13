@@ -233,7 +233,7 @@
       thisProduct.name = thisProduct.data.name;
       thisProduct.amount = thisProduct.amountWidget.value;
 
-      console.log('thisProduct:', thisProduct);
+      //console.log('thisProduct:', thisProduct);
 
       app.cart.add(thisProduct);
     }
@@ -328,10 +328,46 @@
       thisCart.element = utils.createDOMFromHTML(generatedHTML);
       thisCart.dom.productList.appendChild(thisCart.element);
 
-      console.log('adding product', menuProduct);
-      console.log('thisCART:', thisCart);
-      console.log('PRODUCTList:', thisCart.dom.productList);
+      thisCart.products.push(menuProduct);
+      //console.log('thisCart.products:', thisCart.products);
+      console.log('menuProduct:', menuProduct);
+
     }
+  }
+
+  class CartProduct {
+
+    constructor(menuProduct, element) {
+      const thisCartProduct = this;
+
+      console.log('element-constructor argument:', element);
+      console.log('menuProduct-constructor argument:', menuProduct, thisCartProduct.menuProduct);
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.amount =menuProduct.amount;
+      thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params));
+
+      thisCartProduct.getElements(element);
+
+      console.log('new CartProduct', thisCartProduct);
+    }
+    getElements(element){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element;
+      console.log('thisCartProduct.dom.wrapper:', thisCartProduct.dom.wrapper);
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+
+    }
+
+
   }
 
   const app = {
@@ -354,6 +390,7 @@
       const thisApp = this;
       const cartElem = document.querySelector(select.containerOf.cart);
       thisApp.cart = new Cart(cartElem);
+      thisApp.cart.cartProduct = new CartProduct;
     },
 
     init: function () {
