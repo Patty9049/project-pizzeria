@@ -350,10 +350,15 @@
         }
       }
     }
-    remove(){
-      //thisCart = this;
+    remove(cartProduct){
+      const thisCart = this;
 
-      //const index = thisCart;
+      console.log('hi, remower');
+      const index = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice([index],1);
+      cartProduct(indexOf(index)).remove(cartProduct.dom.wrapper);
+      thisCart.update();
+
     }
   }
 
