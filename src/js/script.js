@@ -308,7 +308,11 @@
       for(let key of thisCart.renderTotalsKeys){
         thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
       }
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
     }
+
     initActions(){
       const thisCart = this;
 
@@ -321,6 +325,10 @@
       });
       thisCart.dom.productList.addEventListener('remove', function(){
         thisCart.remove(event.detail.cartProduct);
+      });
+      thisCart.dom.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -367,6 +375,46 @@
       toRemove.remove();
       thisCart.update();
 
+    }
+    sendOrder(prod){
+      const thisCart = this;
+      const url = settings.db.url + '/' + settings.db.order;
+      thisCart.productsPay = [];
+
+
+      const payload = {
+        address: thisCart.dom.address,
+        phone: thisCart.dom.phone,
+        totalNumber: thisCart.totalNumber,
+        subtotalPrice: thisCart.subtotalPrice,
+        deliveryFee: thisCart.deliveryFee,
+        totalPrice: thisCart.totalPrice,
+        products: []
+
+      };
+      for(let elem of thisCart.products){
+        const thisCart = this;
+        console.log('elem', elem);
+        const result = elem.getData();
+        console.log('result', result);
+        thisCart.productsPay.push(result);
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url,options)
+        .then(function(response){
+          return response.json();
+        })
+        .then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
+        });
     }
   }
 
@@ -440,6 +488,17 @@
         thisCartProduct.remove();
         console.log('remove');
       });
+    }
+    getData(){
+      const thisCartProduct = this;
+      const prod = {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        params: thisCartProduct.params
+      };
+      console.log('prod', prod);
     }
 
   }
