@@ -30,8 +30,8 @@ class Cart {
       thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
     }
     thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
-    thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
-    thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+    thisCart.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+    thisCart.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
   }
 
   initActions(){
@@ -102,15 +102,15 @@ class Cart {
     const url = settings.db.url + '/' + settings.db.order;
 
     const payload = {
-      address: thisCart.dom.address,
-      phone: thisCart.dom.phone,
+      address: thisCart.address.value,
+      phone: thisCart.phone.value,
       totalNumber: thisCart.totalNumber,
       subtotalPrice: thisCart.subtotalPrice,
       deliveryFee: thisCart.deliveryFee,
       totalPrice: thisCart.totalPrice,
-      products: []
-
+      products: [],
     };
+    console.log('address', thisCart.address);
     for(let elem of thisCart.products){
       const result = elem.getData();
       console.log('result', result);
