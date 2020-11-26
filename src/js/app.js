@@ -1,6 +1,7 @@
 import {settings, select, classNames, templates} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
   initPages: function(){
@@ -10,8 +11,6 @@ const app = {
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
     const idFromHash = window.location.hash.replace('#/', '');
-    console.log('idFromHash', idFromHash);
-
     let pageMatchingHash = thisApp.pages[0].id;
 
     for(let page of thisApp.pages){
@@ -46,7 +45,6 @@ const app = {
   },
   initMenu: function () {
     const thisApp = this;
-    console.log('thisApp.data:', thisApp.data);
 
     for (let productData in thisApp.data.products) {
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
@@ -58,19 +56,16 @@ const app = {
 
     thisApp.data = {};
     const url = settings.db.url + '/' + settings.db.product;
-    console.log('url:', url);
 
     fetch(url)
       .then(function(rawResponse){
         return rawResponse.json();
       })
       .then(function (parsedResponse){
-        console.log('parsedResponse', parsedResponse);
         thisApp.data.products = parsedResponse;
         thisApp.initMenu();
 
       });
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
   initCart: function(){
@@ -82,6 +77,12 @@ const app = {
       app.cart.add(event.detail.product);
     });
   },
+  initBooking: function(){
+    const thisApp = this;
+    console.log(thisApp);
+    const bookingWidgetContainer = document.querySelector(select.containerOf.boobking);
+    thisApp.booking = new Booking(bookingWidgetContainer);
+  },
 
   init: function () {
     const thisApp = this;
@@ -92,9 +93,9 @@ const app = {
     console.log('templates:', templates);
 
     thisApp.initPages();
-
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   },
 };
 
