@@ -79,7 +79,6 @@ const app = {
   },
   initBooking: function(){
     const thisApp = this;
-    console.log(thisApp);
     const bookingWidgetContainer = document.querySelector(select.containerOf.boobking);
     thisApp.booking = new Booking(bookingWidgetContainer);
   },
