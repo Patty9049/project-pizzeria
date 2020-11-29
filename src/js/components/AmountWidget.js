@@ -2,19 +2,19 @@ import {select,settings} from '../settings.js';
 import BaseWidget from './BaseWidget.js';
 
 class AmountWidget extends BaseWidget {
-  constructor(element){
-    super(element, settings.amountWidget.dafaultValue);
+  constructor(element, value){
+    super(element, value || settings.amountWidget.defaultValue);
 
     const thisWidget = this;
-    //console.log('thisWidget', thisWidget);
-
     thisWidget.getElements(element);
     thisWidget.dom.input.value = settings.amountWidget.defaultValue;
     thisWidget.setValue();
     thisWidget.initActions();
   }
-  getElements(){
+  getElements(element){
     const thisWidget = this;
+    thisWidget.dom = {};
+    thisWidget.dom.wrapper = element;
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
     thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
@@ -30,8 +30,9 @@ class AmountWidget extends BaseWidget {
   }
   initActions(){
     const thisWidget = this;
-    //thisWidget.dom.input.addEventListener('change', thisWidget.setValue(thisWidget.value));
-    //<---- zmiana wg filmu  ^
+    thisWidget.dom.input.addEventListener('change', function(){
+      thisWidget.value = thisWidget.dom.input.value;
+    });
     thisWidget.dom.input.addEventListener('change', function(){
       thisWidget.value = thisWidget.dom.input.value;
     });

@@ -65,20 +65,15 @@ class Cart {
   }
   update(){
     const thisCart = this;
-    console.log('thisCart:', thisCart);
     thisCart.totalNumber = 0;
     thisCart.subtotalPrice = 0;
     for(let product of thisCart.products){
-      console.log('product:', product);
-      thisCart.totalNumber += thisCart.amount;
-      thisCart.subtotalPrice += thisCart.price;
+      thisCart.totalNumber += product.amount;
+      thisCart.subtotalPrice += product.price;
     }
     thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-    //console.log('thisCart.totalNumber', thisCart.totalNumber);
-    //console.log('thisCart.subtotalPice', thisCart.subtotalPrice);
-    //console.log('thisCart.totalPrice', thisCart.totalPrice);
-    for(let key in thisCart.renderTotalsKeys){
-      for(let elem in thisCart.dom[key]){
+    for(let key of thisCart.renderTotalsKeys){
+      for(let elem of thisCart.dom[key]){
         elem.innerHTML = thisCart[key];
       }
     }

@@ -33,17 +33,8 @@ class CartProduct {
   }
   initAmountWidget() {
     const thisCartProduct = this;
-    //console.log('thisCartProduct',thisCartProduct);
-    thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
-    //console.log('thisCartProduct.amountWidget:', thisCartProduct.amountWidget);
+    thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget, thisCartProduct.amount);
     thisCartProduct.element.addEventListener('updated', function(){
-      //console.log('thisCartProduct.amountWidget.value', thisCartProduct.amountWidget.value);
-      //console.log('thisCartProduct.amount:', thisCartProduct.amount);
-
-      //console.log('thisCartProduct.priceSingle:', thisCartProduct.priceSingle);
-      //console.log('thisCartPoduct.price:', thisCartProduct.price);
-      //console.log('thisCartProduct.dom.price', thisCartProduct.dom.price);
-
       thisCartProduct.amount = thisCartProduct.amountWidget.value;
       thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
       thisCartProduct.dom.price.innerHTML = thisCartProduct.price;

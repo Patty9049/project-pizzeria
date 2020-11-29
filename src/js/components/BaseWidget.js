@@ -1,10 +1,9 @@
-
+//import {select} from '../settings.js';
 class BaseWidget{
   constructor(wrapperElement, initialValue){
     const thisWidget = this;
 
     thisWidget.dom = {};
-    // console.log(thisWidget.dom);
     thisWidget.dom.wrapper = wrapperElement;
     thisWidget.correctValue = initialValue;
   }
@@ -12,49 +11,36 @@ class BaseWidget{
   get value(){
     const thisWidget = this;
     return thisWidget.correctValue;
-
   }
-
   set value(value){
     const thisWidget = this;
-
     const newValue = thisWidget.parseValue(value);
-
     if(newValue!==thisWidget.correctValue && thisWidget.isValid(newValue)){
       thisWidget.correctValue = newValue;
       thisWidget.announce();
     }
-
     thisWidget.renderValue();
   }
-
   parseValue(value){
     return parseInt(value);
-
   }
-
   isValid(value){
     return !isNaN(value);
-
   }
-
   renderValue(){
     const thisWidget = this;
     thisWidget.dom.wrapper.innerHTML = thisWidget.value;
-    console.log('ActualValue', thisWidget.value);
   }
-
   setValue(value){
     const thisWidget = this;
     thisWidget.value = value;
   }
-
   announce(){
     const thisWidget = this;
-
     const event = new CustomEvent ('updated', {
       bubbles: true,
     });
+    console.log('thisWidget.dom for dispatchEvent', thisWidget.dom);
     thisWidget.dom.wrapper.dispatchEvent(event);
   }
 
