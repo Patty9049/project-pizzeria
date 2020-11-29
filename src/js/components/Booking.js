@@ -1,5 +1,5 @@
-import { templates, select, /*settings*/ } from '../settings.js';
-//import utils from '../utils.js';
+import { templates, select, settings } from '../settings.js';
+import utils from '../utils.js';
 import AmountWidget from './AmountWidget.js';
 import DatePicker from './DatePicker.js';
 import HourPicker from './HourPicker.js';
@@ -14,37 +14,37 @@ class Booking {
     //thisBooking.getDate();
 
   }
-  // getData(){
-  //   const thisBooking = this;
-  //   const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
-  //   const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
-  //   const params ={
-  //     booking: [
-  //       startDateParam,
-  //       endDateParam,
-  //     ],
-  //     eventsCurrent: [
-  //       settings.db.notRepeatParam,
-  //       startDateParam,
-  //       endDateParam,
+  getData(){
+    const thisBooking = this;
+    const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
+    const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
+    const params ={
+      booking: [
+        startDateParam,
+        endDateParam,
+      ],
+      eventsCurrent: [
+        settings.db.notRepeatParam,
+        startDateParam,
+        endDateParam,
 
-  //     ],
-  //     eventsRepeat: [
-  //       settings.db.repeatParam,
-  //       endDateParam,
-  //     ],
-  //   };
-  //   console.log('getData params:', params);
+      ],
+      eventsRepeat: [
+        settings.db.repeatParam,
+        endDateParam,
+      ],
+    };
+    console.log('getData params:', params);
 
-  //   const urls = {
-  //     booking:       settings.db.url + '/' + settings.db.booking
-  //                                    + '?' + params.booking.join('&'),
-  //     eventsCurrent: settings.db.url + '/' + settings.db.event
-  //                                    + '?' + params.eventsCurrent.join('&'),
-  //     eventsRepeat:  settings.db.url + '/' + settings.db.event
-  //                                    + '?' + params.eventsRepeat.join('&'),
-  //   };
-  //   console.log('urls', urls);
+    const urls = {
+      booking:       settings.db.url + '/' + settings.db.booking
+                                     + '?' + params.booking.join('&'),
+      eventsCurrent: settings.db.url + '/' + settings.db.event
+                                     + '?' + params.eventsCurrent.join('&'),
+      eventsRepeat:  settings.db.url + '/' + settings.db.event
+                                     + '?' + params.eventsRepeat.join('&'),
+    };
+    console.log('urls', urls);
   //   Promise.all([
   //     fetch(urls.booking),
   //     fetch(urls.eventsCurrent),
@@ -61,22 +61,24 @@ class Booking {
   //       ]);
   //     })
   //     .then(function([bookings, eventsCurrent, eventsRepeat]){
-  //       console.log('bookings:', bookings);
-  //       console.log('eventsCurrent:', eventsCurrent);
-  //       console.log('eventsRepeat:', eventsRepeat);
-  //       //thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
+  //       thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
   //     });
-  //}
+  // }
   //-----------------------> TUTAJ
-  //parseData(bookings, eventsCurrent, eventsRepeat){
-  //const thisBooking = this;
+  }
+  parseData(bookings, eventsCurrent, eventsRepeat){
+    const thisBooking = this;
 
-  //thisBooking.booked = {};
+    console.log('bookings:', bookings);
+    console.log('eventsCurrent:', eventsCurrent);
+    console.log('eventsRepeat:', eventsRepeat);
 
-  //for(let item of eventsCurrent){
+    thisBooking.booked = {};
 
-  //}
-  //}
+    for(let item of eventsCurrent){
+      console.log(item);
+    }
+  }
   render(wrapper) {
     const thisBooking = this;
     const generatedHTML = templates.bookingWidget();
@@ -99,4 +101,5 @@ class Booking {
 
   }
 }
+
 export default Booking;

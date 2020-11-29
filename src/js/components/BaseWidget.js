@@ -36,12 +36,13 @@ class BaseWidget{
     thisWidget.value = value;
   }
   announce(){
-    const thisWidget = this;
-    const event = new CustomEvent ('updated', {
-      bubbles: true,
-    });
-    console.log('thisWidget.dom for dispatchEvent', thisWidget.dom);
-    thisWidget.dom.wrapper.dispatchEvent(event);
+    //const thisWidget = this;
+    // const event = new CustomEvent ('updated', {
+    //   bubbles: true,
+    // });
+    // console.log('thisWidget.dom for dispatchEvent', thisWidget.dom);
+    // thisWidget.dom.wrapper.dispatchEvent(event);
+    //console.log(thisWidget);
   }
 
 
