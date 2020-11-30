@@ -5,19 +5,23 @@ import DatePicker from './DatePicker.js';
 import HourPicker from './HourPicker.js';
 
 class Booking {
-  constructor(){
+  constructor(wrapper){
     const thisBooking = this;
-    const bookingWrapperContainer = document.querySelector(select.containerOf.booking);
 
-    thisBooking.render(bookingWrapperContainer);
+    thisBooking.render(wrapper);
     thisBooking.initWidgets();
-    //thisBooking.getDate();
+    thisBooking.getData();
 
   }
   getData(){
     const thisBooking = this;
+    console.log('thisBooking.datePicker.minDate', thisBooking.datePicker.minDate);
+    console.log('thisBooking.datePicker.maxDate', thisBooking.datePicker.maxDate);
+
     const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
+    console.log('startDateParam', startDateParam);
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
+
     const params ={
       booking: [
         startDateParam,
@@ -34,7 +38,7 @@ class Booking {
         endDateParam,
       ],
     };
-    console.log('getData params:', params);
+    // console.log('getData params:', params);
 
     const urls = {
       booking:       settings.db.url + '/' + settings.db.booking
@@ -44,45 +48,46 @@ class Booking {
       eventsRepeat:  settings.db.url + '/' + settings.db.event
                                      + '?' + params.eventsRepeat.join('&'),
     };
-    console.log('urls', urls);
-  //   Promise.all([
-  //     fetch(urls.booking),
-  //     fetch(urls.eventsCurrent),
-  //     fetch(urls.eventsRepeat),
-  //   ])
-  //     .then(function(allResponses){
-  //       const bookingsResponse = allResponses[0];
-  //       const eventsCurrentResponse = allResponses[1];
-  //       const eventsRepeatResponse = allResponses[2];
-  //       return Promise.all([
-  //         bookingsResponse.json(),
-  //         eventsCurrentResponse.json(),
-  //         eventsRepeatResponse.json(),
-  //       ]);
-  //     })
-  //     .then(function([bookings, eventsCurrent, eventsRepeat]){
-  //       thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
-  //     });
+    // console.log('urls', urls);
+    Promise.all([
+      fetch(urls.booking),
+      fetch(urls.eventsCurrent),
+      fetch(urls.eventsRepeat),
+    ])
+      .then(function(allResponses){
+        const bookingsResponse = allResponses[0];
+        const eventsCurrentResponse = allResponses[1];
+        const eventsRepeatResponse = allResponses[2];
+        return Promise.all([
+          bookingsResponse.json(),
+          eventsCurrentResponse.json(),
+          eventsRepeatResponse.json(),
+        ]);
+      })
+      .then(function([bookings, eventsCurrent, eventsRepeat]){
+        //thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
+        console.log('bookings:', bookings);
+        console.log('eventsCurrent:', eventsCurrent);
+        console.log('eventsRepeat:', eventsRepeat);
+      });
+  
+  }
+  // parseData(bookings, eventsCurrent, eventsRepeat){
+  //   const thisBooking = this;
+
+  //   console.log('bookings:', bookings);
+  //   console.log('eventsCurrent:', eventsCurrent);
+  //   console.log('eventsRepeat:', eventsRepeat);
+
+  //   thisBooking.booked = {};
+
+  //   // for(let item of eventsCurrent){
+  //   //   console.log(item);
+  //   // }
   // }
-  //-----------------------> TUTAJ
-  }
-  parseData(bookings, eventsCurrent, eventsRepeat){
-    const thisBooking = this;
-
-    console.log('bookings:', bookings);
-    console.log('eventsCurrent:', eventsCurrent);
-    console.log('eventsRepeat:', eventsRepeat);
-
-    thisBooking.booked = {};
-
-    for(let item of eventsCurrent){
-      console.log(item);
-    }
-  }
   render(wrapper) {
     const thisBooking = this;
     const generatedHTML = templates.bookingWidget();
-    
     thisBooking.dom = {};
     thisBooking.dom.wrapper = wrapper;
     thisBooking.dom.wrapper.innerHTML = generatedHTML;

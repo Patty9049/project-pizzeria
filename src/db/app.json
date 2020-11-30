@@ -175,11 +175,6 @@
                             "price": 1,
                             "default": true
                         },
-                        "olives": {
-                            "label": "Olives",
-                            "price": 1,
-                            "default": true
-                        },
                         "feta": {
                             "label": "Feta cheese",
                             "price": 1
