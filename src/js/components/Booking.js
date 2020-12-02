@@ -15,14 +15,11 @@ class Booking {
   }
   getData(){
     const thisBooking = this;
-    console.log('thisBooking.datePicker.minDate', thisBooking.datePicker.minDate);
-    console.log('thisBooking.datePicker.maxDate', thisBooking.datePicker.maxDate);
-
+    const endDate = new Date(thisBooking.datePicker.maxDate);
     const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
-    console.log('startDateParam', startDateParam);
-    const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
+    const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(endDate);
 
-    const params ={
+    const params = {
       booking: [
         startDateParam,
         endDateParam,
@@ -38,7 +35,6 @@ class Booking {
         endDateParam,
       ],
     };
-    // console.log('getData params:', params);
 
     const urls = {
       booking:       settings.db.url + '/' + settings.db.booking
@@ -94,6 +90,7 @@ class Booking {
     thisBooking.dom.peopleAmount = wrapper.querySelector(select.booking.peopleAmount);
     thisBooking.dom.hoursAmount = wrapper.querySelector(select.booking.hoursAmount);
     thisBooking.dom.datePicker = wrapper.querySelector(select.widgets.datePicker.wrapper);
+    thisBooking.dom.hourPicker = wrapper.querySelector(select.widgets.hourPicker.wrapper);
   }
   initWidgets() {
     const thisBooking = this;
