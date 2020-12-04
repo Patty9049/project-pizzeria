@@ -201,8 +201,8 @@
     "event": [
         {
             "id": 1,
-            "date": "2019-01-01",
-            "hour": "12:30",
+            "date": "2020-12-17",
+            "hour": "16:30",
             "table": 1,
             "repeat": false,
             "duration": 4,
@@ -258,5 +258,15 @@
             ]
         }
     ],
-    "booking": []
+    "booking": [
+        {
+            "id": 1,
+            "date": "2020-12-16",
+            "hour": "18:00",
+            "table": 2,
+            "duration": 4,
+            "ppl": 3,
+            "starters": []
+        }
+    ]
 }

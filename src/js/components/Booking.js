@@ -11,14 +11,12 @@ class Booking {
     thisBooking.render(wrapper);
     thisBooking.initWidgets();
     thisBooking.getData();
-
   }
   getData(){
     const thisBooking = this;
-    const endDate = new Date(thisBooking.datePicker.maxDate);
+    const endDate = utils.addDays(thisBooking.datePicker.minDate, settings.datePicker.maxDaysInFuture);
     const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(endDate);
-
     const params = {
       booking: [
         startDateParam,
@@ -35,7 +33,6 @@ class Booking {
         endDateParam,
       ],
     };
-
     const urls = {
       booking:       settings.db.url + '/' + settings.db.booking
                                      + '?' + params.booking.join('&'),
@@ -44,7 +41,6 @@ class Booking {
       eventsRepeat:  settings.db.url + '/' + settings.db.event
                                      + '?' + params.eventsRepeat.join('&'),
     };
-    // console.log('urls', urls);
     Promise.all([
       fetch(urls.booking),
       fetch(urls.eventsCurrent),
