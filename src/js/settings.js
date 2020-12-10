@@ -1,6 +1,7 @@
 /*global Handlebars */
 export const select = {
   templateOf: {
+    mainPage: '#template-main-page',
     menuProduct: '#template-menu-product',
     cartProduct: '#template-cart-product',
     bookingWidget: '#template-booking-widget',
@@ -10,11 +11,16 @@ export const select = {
     cart: '#cart',
     pages: '#pages',
     booking: '.booking-wrapper',
+    main: '.main-wrapper',
+    mainGeneral: '.general__order-booking-img',
   },
   all: {
     menuProducts: '#product-list > .product',
     menuProductsActive: '#product-list > .product.active',
     formInputs: 'input, select',
+  },
+  mainGeneral: {
+    images: '.orderbooking-img'
   },
   menuProduct: {
     clickable: '.product__header',
@@ -112,6 +118,7 @@ export const settings = {
   },
   db: {
     url: '//localhost:3131',
+    main: 'main',
     product: 'product',
     order: 'order',
     booking: 'booking',
@@ -128,4 +135,5 @@ export const templates = {
   menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
   bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
+  mainPage: Handlebars.compile(document.querySelector(select.templateOf.mainPage).innerHTML),
 };

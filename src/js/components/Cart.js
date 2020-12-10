@@ -13,7 +13,6 @@ class Cart {
 
     thisCart.getElements(element);
     thisCart.initActions();
-    //console.log('new Cart', thisCart);
   }
 
   getElements(element){
@@ -81,9 +80,7 @@ class Cart {
   remove(cartProduct){
     const thisCart = this;
 
-    console.log('hi, remover');
     const index = thisCart.products.indexOf(cartProduct);
-    console.log('indexOfCartProduct:', index);
     const removed = thisCart.products.splice([index],1);
     console.log('removed:', removed);
     const toRemove = cartProduct.dom.wrapper;
