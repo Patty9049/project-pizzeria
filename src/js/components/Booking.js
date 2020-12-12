@@ -7,7 +7,7 @@ import HourPicker from './HourPicker.js';
 class Booking {
   constructor(wrapper) {
     const thisBooking = this;
-  
+
     thisBooking.render(wrapper);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -116,18 +116,15 @@ class Booking {
       if( !isNaN(tableId) ){
         tableId = parseInt(tableId);
       }
-      if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1 ){
+      if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)){
         table.classList.add(classNames.booking.tableBooked);
       }else{
         table.classList.remove(classNames.booking.tableBooked);
-      }
-      if (allAvailable){
         table.addEventListener('click', function(e){
           e.preventDefault();
           table.classList.toggle(classNames.booking.tableBooked);
         });
       }
-
     }
   }
   initActions(){
@@ -142,33 +139,85 @@ class Booking {
     console.log(thisBooking);
     const url = settings.db.url + '/' + settings.db.booking;
     console.log('URL', url);
-    thisBooking.id = [];
+    const bookedTables = [];
     for(let table of thisBooking.dom.tables){
-      let tableId = table.getAttribute(settings.booking.tableIdAttribute);
-      if( !isNaN(tableId) ){
-        tableId = parseInt(tableId);
-      }
-      if(table.classList.contains(classNames.booking.tableBooked) && !thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1){
-        const id = table.getAttribute(settings.booking.tableIdAttribute);
-        thisBooking.id.push(id);
+      if(table.classList.contains('booked')) {
+        const tableId = table.getAttribute('data-table');
+        bookedTables.push(tableId);
       }
     }
-    thisBooking.starters = [];
+    const startersArray = [];
     const starters = Array.from(thisBooking.dom.wrapper.querySelectorAll(select.booking.startersCheckboxWrapper));
-    console.log('staters.array', starters);
+
     for (let starter of starters){
-      const starterText = starter.innerText;
-      if(starter.checked){
-        thisBooking.starters.push(starterText);
+      console.log('let starter', starter);
+      const starterInputValue = starter.querySelector('input.value');
+      console.log('starterInputValue', starterInputValue);
+
+      const starterInnerText = starter.innerText;
+      console.log('starterInnerText', starterInnerText);
+
+      const checkboxElem = starter.querySelector('.checkbox__checkmark');
+      console.log('checkboxElem', checkboxElem);
+
+      
+      if(checkboxElem.classList.contains('checkbox__checkmark::after') || checkboxElem.selected || checkboxElem.checked || checkboxElem.innerText == '::after'){
+        console.log('HI :)');
       }
+
     }
+
+
+    // for (let starter of starters){
+
+    //   console.log(starter);
+    //   // const target = document.querySelector('.checkbox__checkmark');
+    //   // console.log('target', target);
+
+    //   const corectlabelInputValue = starter.querySelector('label input.value');
+    //   console.log('corectlabelInputValue', corectlabelInputValue);
+    //   const starterText = starter.innerText;
+    //   console.log(starterText);
+    //   const startersArray = [];
+
+    //   // const const1 = starter.querySelector('label.checkbox__checkmark');
+    //   // console.log(const1);
+    //   if(target.checked || starter.selected){
+    //     console.log('HI :)');
+    //     startersArray.push(target.innerText);
+    //   }
+    //   console.log('startersArrayReaddy', startersArray);
+    // }
+
+
+
+
+    // thisBooking.starters = [];
+    // const starters = Array.from(thisBooking.dom.wrapper.querySelectorAll(select.booking.startersCheckboxWrapper));
+    // console.log('staters.array', starters);
+    // const startersArray = [];
+
+    // for (let starter of starters){
+
+    //   console.log(starter);
+    //   const target = document.querySelector('.checkbox__checkmark');
+    //   console.log('target', target)
+    //   const starterText = starter.innerText;
+    //   console.log(starterText);
+    //   const startersArray = [];
+    //   if(starters.checked){
+    //     console.log('HI :)');
+    //     startersArray.push(starter.innerText);
+    //   }
+    //   console.log('startersArray', startersArray);
+    // }
     const payload = {
       date: thisBooking.datePicker.correctValue,
       hour: thisBooking.HourPicker.correctValue,
-      table: [...thisBooking.id],
+      table: bookedTables,
       duration: thisBooking.hoursAmount.correctValue,
       ppl: thisBooking.peopleAmount.correctValue,
-      starters: thisBooking.starters,
+      starters: startersArray,
     };
     console.log('PAYLOAD', payload);
 
