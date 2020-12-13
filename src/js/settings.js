@@ -70,7 +70,10 @@ export const select = {
     tables: '.floor-plan .table',
     form: '.booking-form',
     startersCheckboxWrapper: '.checkbox',
-    startersCheckboxInput: '.checkbox input'
+    startersCheckboxInput: '.checkbox input',
+    phone: '[name="phone"]',
+    address: '[name="address"]',
+
   },
   nav: {
     links: '.main-nav a',

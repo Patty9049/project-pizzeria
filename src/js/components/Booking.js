@@ -125,6 +125,9 @@ class Booking {
           table.classList.toggle(classNames.booking.tableBooked);
         });
       }
+      // if(thisBooking.booked[thisBooking.response.date].includes){
+      //   console.log('hello!!!');
+      // }
     }
   }
   initActions(){
@@ -138,89 +141,39 @@ class Booking {
     const thisBooking = this;
     console.log(thisBooking);
     const url = settings.db.url + '/' + settings.db.booking;
-    console.log('URL', url);
     const bookedTables = [];
     for(let table of thisBooking.dom.tables){
-      if(table.classList.contains('booked')) {
+      if(table.classList.contains('booked')){
         const tableId = table.getAttribute('data-table');
-        bookedTables.push(tableId);
+        if( !isNaN(tableId) ){
+          const tableIdNumber = parseInt(tableId);
+          bookedTables.push(tableIdNumber);
+          thisBooking.bookedTables = bookedTables;
+          console.log('thisBooking.bookedTables', thisBooking.bookedTables);
+        }
       }
+      console.log('thisBooking.booked', thisBooking.booked);
     }
     const startersArray = [];
     const starters = Array.from(thisBooking.dom.wrapper.querySelectorAll(select.booking.startersCheckboxWrapper));
 
     for (let starter of starters){
-      console.log('let starter', starter);
-      const starterInputValue = starter.querySelector('input.value');
-      console.log('starterInputValue', starterInputValue);
-
-      const starterInnerText = starter.innerText;
-      console.log('starterInnerText', starterInnerText);
-
-      const checkboxElem = starter.querySelector('.checkbox__checkmark');
-      console.log('checkboxElem', checkboxElem);
-
-      
-      if(checkboxElem.classList.contains('checkbox__checkmark::after') || checkboxElem.selected || checkboxElem.checked || checkboxElem.innerText == '::after'){
+      const checkboxInput = starter.querySelector(select.booking.startersCheckboxInput);
+      if(checkboxInput.checked){
         console.log('HI :)');
+        startersArray.push(checkboxInput.value);
       }
-
     }
-
-
-    // for (let starter of starters){
-
-    //   console.log(starter);
-    //   // const target = document.querySelector('.checkbox__checkmark');
-    //   // console.log('target', target);
-
-    //   const corectlabelInputValue = starter.querySelector('label input.value');
-    //   console.log('corectlabelInputValue', corectlabelInputValue);
-    //   const starterText = starter.innerText;
-    //   console.log(starterText);
-    //   const startersArray = [];
-
-    //   // const const1 = starter.querySelector('label.checkbox__checkmark');
-    //   // console.log(const1);
-    //   if(target.checked || starter.selected){
-    //     console.log('HI :)');
-    //     startersArray.push(target.innerText);
-    //   }
-    //   console.log('startersArrayReaddy', startersArray);
-    // }
-
-
-
-
-    // thisBooking.starters = [];
-    // const starters = Array.from(thisBooking.dom.wrapper.querySelectorAll(select.booking.startersCheckboxWrapper));
-    // console.log('staters.array', starters);
-    // const startersArray = [];
-
-    // for (let starter of starters){
-
-    //   console.log(starter);
-    //   const target = document.querySelector('.checkbox__checkmark');
-    //   console.log('target', target)
-    //   const starterText = starter.innerText;
-    //   console.log(starterText);
-    //   const startersArray = [];
-    //   if(starters.checked){
-    //     console.log('HI :)');
-    //     startersArray.push(starter.innerText);
-    //   }
-    //   console.log('startersArray', startersArray);
-    // }
     const payload = {
       date: thisBooking.datePicker.correctValue,
       hour: thisBooking.HourPicker.correctValue,
-      table: bookedTables,
+      table: parseInt(bookedTables.toString()),
       duration: thisBooking.hoursAmount.correctValue,
       ppl: thisBooking.peopleAmount.correctValue,
       starters: startersArray,
+      phone: thisBooking.phone.value,
+      address: thisBooking.address.value
     };
-    console.log('PAYLOAD', payload);
-
     const options = {
       method: 'POST',
       headers: {
@@ -228,6 +181,7 @@ class Booking {
       },
       body: JSON.stringify(payload),
     };
+    thisBooking.payload = payload;
 
     fetch(url,options)
       .then(function(response){
@@ -235,9 +189,30 @@ class Booking {
       })
       .then(function(parsedResponse){
         console.log('parsedResponse', parsedResponse);
+        thisBooking.response = parsedResponse;
+        console.log('thisBooking.response', thisBooking.response);
+        console.log('thisBooking.booked', thisBooking.booked);
+
+        thisBooking.reserv = {};
+        thisBooking.reserv.hour = thisBooking.response.hour;
+        thisBooking.reserv.date = thisBooking.response.date;
+        console.log('thisBooking.reserv.hour', thisBooking.reserv.hour);
+        console.log('TYPEOFthisBooking.reserv.hour', typeof(thisBooking.reserv.hour));
+        console.log('thisBooking.reserv.date', thisBooking.reserv.date);
+        thisBooking.updateDOM();
       });
 
 
+    for(let table of thisBooking.dom.tables){
+      const tableId = table.getAttribute('data-table');
+      const tableIdNumber = parseInt(tableId);
+      if(thisBooking.booked[thisBooking.date][thisBooking.hour].includes[tableIdNumber] !== thisBooking.payload.tables){
+        table.classList.add(classNames.booking.tableBooked);
+      }
+      if(table.classList.contains('booked')){
+        table.classList.add(classNames.booking.tableBooked);
+      }
+    }
   }
   render(wrapper) {
     const thisBooking = this;
@@ -251,7 +226,8 @@ class Booking {
     thisBooking.dom.hourPicker = wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
-
+    thisBooking.phone = thisBooking.dom.form.querySelector(select.booking.phone);
+    thisBooking.address = thisBooking.dom.form.querySelector(select.booking.address);
   }
   initWidgets() {
     const thisBooking = this;
@@ -263,6 +239,7 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+  
   }
 }
 
