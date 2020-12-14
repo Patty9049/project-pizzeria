@@ -21,7 +21,12 @@ export const select = {
   },
   mainGeneral: {
     imgList: '.genral__img-list',
-    images: '.orderbooking-img',
+  },
+  mainGallery: {
+    gallery: '.gallery-images',
+
+    // imgRow1:
+    // imgRow2:
   },
   menuProduct: {
     clickable: '.product__header',

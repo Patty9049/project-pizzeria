@@ -7,7 +7,6 @@ class MainPage {
     const thisMainPage = this;
     thisMainPage.render(wrapper);
     thisMainPage.getData();
-    thisMainPage.addImages();
   }
   render(wrapper){
     const thisMainPage = this;
@@ -23,7 +22,6 @@ class MainPage {
 
     thisMainPage.dom.images = {};
     console.log('thisMainPage', thisMainPage);
-    console.log('thisMainPage.dom', thisMainPage.dom);
     console.log('generatedDOM', generatedDOM);
   }
   getData() {
@@ -42,31 +40,24 @@ class MainPage {
   }
   arrangeData() {
     const thisMainPage = this;
-    console.log('thisMainPage.data', thisMainPage.data);
-
+    thisMainPage.images = {};
     const general = thisMainPage.data[0];
-    console.log('general', general);
-    thisMainPage.dom.images.general = general;
-
+    thisMainPage.images.general = general;
     const carousel = thisMainPage.data[1];
-    console.log('carousel', carousel);
-    thisMainPage.dom.images.carousel = carousel;
-
+    thisMainPage.images.carousel = carousel;
     const gallery = thisMainPage.data[2];
-    console.log('gallery', gallery);
-    thisMainPage.dom.images.gallery = gallery;
+    thisMainPage.images.gallery = gallery;
 
+    // METODA NA EL Z MAINPAGE.DATA?
     // for(let item of thisMainPage.data){
     //   console.log('ITEM', item);
     //   const name2 = item.class;
     //   console.log('name', name);
-
     //   const $(name2) = {
     //     class: item.class,
     //  images: item.images,
     //   }
     // }
-
     // const MainDataSections = thisMainPage.data.map((el) => {
     //   return (el.class = {
     //     class: el.class,
@@ -74,10 +65,27 @@ class MainPage {
     //   });
     // });
     // console.log('mainDataSections', MainDataSections);
-  }
-  addImages(){
-    
-  }
 
+    thisMainPage.dom.generalImgList = document.querySelector(select.mainGeneral.imgList);
+    for(let item of thisMainPage.images.general.images){
+      const genImg = item;
+      thisMainPage.dom.generalImgList.innerHTML += genImg;
+    }
+    thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
+    const row1 = document.createElement('div');
+    row1.classList.add('row1');
+    const row2 = document.createElement('div');
+    row2.classList.add('row2');
+    thisMainPage.dom.gallery.appendChild(row1);
+    thisMainPage.dom.gallery.appendChild(row2);
+
+    thisMainPage.images.gallery.images.filter((img) => {
+      if(thisMainPage.images.gallery.images.indexOf(img) <= 2){
+        row1.innerHTML += img;
+      } else {
+        row2.innerHTML += img;
+      }
+    });
+  }
 }
 export default MainPage;
