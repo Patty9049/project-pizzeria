@@ -20,7 +20,8 @@ export const select = {
     formInputs: 'input, select',
   },
   mainGeneral: {
-    images: '.orderbooking-img'
+    imgList: '.genral__img-list',
+    images: '.orderbooking-img',
   },
   menuProduct: {
     clickable: '.product__header',

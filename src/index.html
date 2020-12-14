@@ -67,7 +67,12 @@
 
   <div id="pages">
     <section id="main">
-      <div class="main-wrapper container"></div>
+      <div class="main-wrapper container">
+        <div>
+          <ul class="genral__img-list">
+          </ul>
+        </div>
+      </div>
     </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
@@ -82,11 +87,13 @@
       <section id="general">
         <div class="general-wrapper">
           <h1>general</h1>
-          <div class="general__order-booking-img general__row-1">
+          <div class="general__order-booking-img general__row-1 main__images {{ class }}">
             {{#each images}}
               {{{ this }}}
               {{/each}}
           </div>
+          <ul class="genral__img-list">
+          </ul>
           <div class="general__opening-hours general__row-2">
 
           </div>

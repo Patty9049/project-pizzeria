@@ -68,15 +68,15 @@ const app = {
 
       });
 
-    const url2 = settings.db.url + '/' + settings.db.main;
-    fetch(url2)
-      .then(function(rawResponse){
-        return rawResponse.json();
-      })
-      .then(function (parsedResponse){
-        thisApp.mainPage.data = {};
-        thisApp.mainPage.data = parsedResponse;
-      });
+    // const url2 = settings.db.url + '/' + settings.db.main;
+    // fetch(url2)
+    //   .then(function(rawResponse){
+    //     return rawResponse.json();
+    //   })
+    //   .then(function (parsedResponse){
+    //     thisApp.mainPage.data = {};
+    //     thisApp.mainPage.data = parsedResponse;
+    //   });
 
   },
 
