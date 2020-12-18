@@ -69,8 +69,13 @@ class MainPage {
     thisMainPage.dom.generalImgList = document.querySelector(select.mainGeneral.imgList);
     for(let item of thisMainPage.images.general.images){
       const genImg = item;
+      // const genImgh1 = document.createElement('h1');
       thisMainPage.dom.generalImgList.innerHTML += genImg;
     }
+
+
+
+
     thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
     const row1 = document.createElement('div');
     row1.classList.add('row1');

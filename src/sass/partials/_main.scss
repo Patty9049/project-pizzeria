@@ -1,0 +1,54 @@
+.main-page-wrapper {
+  justify-content: center;
+  margin: ($base-size * 3.5) auto;
+  padding: ($base-size * 6) ($base-size * 4);
+  background: $color-light;
+  border-bottom: 1px solid lighten($color-dark, 70%);
+  border-radius: $radius;
+}
+
+.genral__img-list {
+  margin: 2px;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  background-size: 80%;
+}
+
+.genral__img-list img {
+  margin: 2px;
+  height: 100px;
+  width: 50%;
+  object-fit: cover;
+  border-radius: 2%;
+}
+
+.general__opening-hours {
+  padding-top: 15px;
+  background-color: $color-main;
+  margin: 2px;
+  height: 100px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 2%;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-family: "Oswald", sans-serif;
+    color: $color-light;
+    font-size: 26px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    font-family: "Oswald", sans-serif;
+    color: $color-light;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+  }
+}
