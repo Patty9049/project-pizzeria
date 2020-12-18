@@ -47,6 +47,7 @@ class MainPage {
     thisMainPage.images.carousel = carousel;
     const gallery = thisMainPage.data[2];
     thisMainPage.images.gallery = gallery;
+    console.log('carousel', carousel);
 
     // METODA NA EL Z MAINPAGE.DATA?
     // for(let item of thisMainPage.data){
@@ -66,6 +67,8 @@ class MainPage {
     // });
     // console.log('mainDataSections', MainDataSections);
 
+    /*general*/
+
     thisMainPage.dom.generalImgList = document.querySelector(select.mainGeneral.imgList);
     for(let item of thisMainPage.images.general.images){
       const genImg = item;
@@ -73,8 +76,7 @@ class MainPage {
       thisMainPage.dom.generalImgList.innerHTML += genImg;
     }
 
-
-
+    /*gallery*/
 
     thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
     const row1 = document.createElement('div');
@@ -91,6 +93,28 @@ class MainPage {
         row2.innerHTML += img;
       }
     });
+
+    /* carousel*/
+
+    thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
+    console.log('thisMainPage.dom.carousel', thisMainPage.dom.carousel);
+    for(let item of thisMainPage.images.carousel.images){
+      const carImg = item;
+      thisMainPage.dom.carousel.innerHTML += carImg;
+      
+    }
+
+    // thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
+    // console.log('thisMainPage.images.carousel', thisMainPage.images.carousel);
+    // thisMainPage.dom.carousel.slide({
+    //   responsive: [{
+    //     breakpoint: 1024,
+    //     settings: {
+    //       slidesToShow: 3,
+    //       infinite: true
+    //     }
+    //   }]
+    // });
   }
 }
 export default MainPage;

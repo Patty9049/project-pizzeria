@@ -22,11 +22,11 @@ export const select = {
   mainGeneral: {
     imgList: '.genral__img-list',
   },
+  mainCarousel: {
+    carouselDiv: '.carousel-wrapper',
+  },
   mainGallery: {
     gallery: '.gallery-images',
-
-    // imgRow1:
-    // imgRow2:
   },
   menuProduct: {
     clickable: '.product__header',
