@@ -97,24 +97,29 @@ class MainPage {
     /* carousel*/
 
     thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
+    thisMainPage.dom.carousel.slide1 = document.querySelector('.slide1');
+    thisMainPage.dom.carousel.slide2 = document.querySelector('.slide2');
+    thisMainPage.dom.carousel.slide3 = document.querySelector('.slide3');
+    console.log('thisMainPage.dom.carousel.slide1', thisMainPage.dom.carousel.slide1);
+
+
     console.log('thisMainPage.dom.carousel', thisMainPage.dom.carousel);
-    for(let item of thisMainPage.images.carousel.images){
-      const carImg = item;
-      thisMainPage.dom.carousel.innerHTML += carImg;
-      
+    if(thisMainPage.dom.carousel.slide1){
+      const carImg = '<div class="image">' + thisMainPage.images.carousel.images[0] + '</div>';
+      // thisMainPage.dom.carousel.slide1.innerHTML += carImg;
+      thisMainPage.dom.carousel.slide1.insertAdjacentHTML('afterbegin', carImg);
+    }
+    if(thisMainPage.dom.carousel.slide2){
+      const carImg = '<div class="image">' + thisMainPage.images.carousel.images[1] + '</div>';
+      thisMainPage.dom.carousel.slide2.insertAdjacentHTML('afterbegin', carImg);
+    }
+    if(thisMainPage.dom.carousel.slide3){
+      const carImg = '<div class="image">' + thisMainPage.images.carousel.images[2] + '</div>';
+      thisMainPage.dom.carousel.slide3.insertAdjacentHTML('afterbegin', carImg);
     }
 
-    // thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
-    // console.log('thisMainPage.images.carousel', thisMainPage.images.carousel);
-    // thisMainPage.dom.carousel.slide({
-    //   responsive: [{
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: 3,
-    //       infinite: true
-    //     }
-    //   }]
-    // });
+    thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
   }
 }
+
 export default MainPage;
