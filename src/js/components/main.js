@@ -7,6 +7,7 @@ class MainPage {
     const thisMainPage = this;
     thisMainPage.render(wrapper);
     thisMainPage.getData();
+    thisMainPage.links();
   }
   render(wrapper){
     const thisMainPage = this;
@@ -17,8 +18,10 @@ class MainPage {
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
     thisMainPage.dom.mainWrapper = document.querySelector(select.containerOf.main);
     thisMainPage.dom.mainWrapper.appendChild(generatedDOM);
-
     thisMainPage.dom.wrapper.appendChild(generatedDOM);
+    thisMainPage.dom.generalImgList = document.querySelector(select.mainGeneral.imgList);
+    thisMainPage.dom.generalImgList.order = document.querySelector('.general__order');
+    thisMainPage.dom.generalImgList.book = document.querySelector('.general__book');
 
     thisMainPage.dom.images = {};
     console.log('thisMainPage', thisMainPage);
@@ -68,12 +71,9 @@ class MainPage {
 
     /*general*/
 
-    thisMainPage.dom.generalImgList = document.querySelector(select.mainGeneral.imgList);
-    thisMainPage.dom.generalImgList.order = document.querySelector('.general__order');
-    thisMainPage.dom.generalImgList.book = document.querySelector('.general__book');
     console.log('thisMainPage.dom.generalImgList.order', thisMainPage.dom.generalImgList.order);
     console.log('thisMainPage.dom.generalImgList.book', thisMainPage.dom.generalImgList.book);
-   
+
     if(thisMainPage.images.general.images[0]){
       const genImg = thisMainPage.images.general.images[0];
       thisMainPage.dom.generalImgList.order.insertAdjacentHTML('afterbegin', genImg);
@@ -82,6 +82,7 @@ class MainPage {
       const genImg = thisMainPage.images.general.images[1];
       thisMainPage.dom.generalImgList.book.insertAdjacentHTML('afterbegin', genImg);
     }
+
 
     /* carousel*/
 
@@ -105,25 +106,21 @@ class MainPage {
     }
 
     thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
+  }
 
-    /*gallery*/
-   
-    //   thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
-    //   const row1 = document.createElement('div');
-    //   row1.classList.add('row1');
-    //   const row2 = document.createElement('div');
-    //   row2.classList.add('row2');
-    //   thisMainPage.dom.gallery.appendChild(row1);
-    //   thisMainPage.dom.gallery.appendChild(row2);
+  links() {
+    const thisMainPage = this;
+    console.log('window.location', window.location);
+    console.log('window.location.hash', window.location.hash);
+    thisMainPage.dom.generalImgList.order.addEventListener('click', function(e){
+      console.log('ORDER');
+      const clickedElement = this;
 
-  //   thisMainPage.images.gallery.images.filter((img) => {
-  //     if(thisMainPage.images.gallery.images.indexOf(img) <= 2){
-  //       row1.innerHTML += img;
-  //     } else {
-  //       row2.innerHTML += img;
-  //     }
-  //   });
-  //   console.log('thisMainPage.dom.gallery', thisMainPage.dom.gallery);
+      const lastPart = clickedElement.getAttribute('id');
+      console.log('lastPart', lastPart);
+      const newPart = '#/' + lastPart;
+      console.log('newPart', newPart);
+    });
   }
 }
 
