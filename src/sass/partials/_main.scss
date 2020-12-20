@@ -45,12 +45,12 @@
 
 .general__opening-hours {
   padding-top: 20px;
-  background-color: $color-main;border-radius: 3%;
+  background-color: $color-main;
   margin: 2px;
   height: 100px;
   width: 100%;
   object-fit: cover;
-  border-radius: 2%;
+  border-radius: 4%;
 
   h1 {
     display: flex;
@@ -118,9 +118,6 @@ img {
   height: 100%;
   width: 100%;
 }
-// #gallery a {
-//   color: $color-main;
-// }
 
 .row1, .row2 {
   display: inline-flex;
@@ -148,20 +145,42 @@ img {
       position: absolute;
       background-color: $color-dark;
       border-radius: 4%;
+      object-fit: cover;
       height: 180px;
       width: 180px;
-      opacity: 0.5;
+      opacity: 0;
+      overflow: hidden;
+    }
 
-      p {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-      }
+    p {
+      position: absolute;
+      color: $color-light;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      font-size: $font-bold;
+      opacity: 0;
+      justify-content: center center;
+
       .fas {
-        color: $color-light;
-        opacity: 0.9;
+        font-size: 30px;
+        height: 40%;
       }
     }
+    .fa-heart {
+      color: $color-danger;
+    }
   }
- }
+
+  .img-container:hover .overlay {
+    opacity: 0.5;
+  }
+
+  .img-container:hover p {
+    opacity: 0.9;
+  }
+}
+
+#gallery a {
+  color: $color-main;
+}
