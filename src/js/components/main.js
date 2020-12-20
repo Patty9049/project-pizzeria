@@ -35,7 +35,6 @@ class MainPage {
         thisMainPage.data = {};
         thisMainPage.data = parsedResponse;
         thisMainPage.arrangeData(parsedResponse);
-
       });
   }
   arrangeData() {
@@ -47,7 +46,7 @@ class MainPage {
     thisMainPage.images.carousel = carousel;
     const gallery = thisMainPage.data[2];
     thisMainPage.images.gallery = gallery;
-    console.log('carousel', carousel);
+    thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
 
     // METODA NA EL Z MAINPAGE.DATA?
     // for(let item of thisMainPage.data){
@@ -70,29 +69,19 @@ class MainPage {
     /*general*/
 
     thisMainPage.dom.generalImgList = document.querySelector(select.mainGeneral.imgList);
-    for(let item of thisMainPage.images.general.images){
-      const genImg = item;
-      // const genImgh1 = document.createElement('h1');
-      thisMainPage.dom.generalImgList.innerHTML += genImg;
+    thisMainPage.dom.generalImgList.order = document.querySelector('.general__order');
+    thisMainPage.dom.generalImgList.book = document.querySelector('.general__book');
+    console.log('thisMainPage.dom.generalImgList.order', thisMainPage.dom.generalImgList.order);
+    console.log('thisMainPage.dom.generalImgList.book', thisMainPage.dom.generalImgList.book);
+   
+    if(thisMainPage.images.general.images[0]){
+      const genImg = thisMainPage.images.general.images[0];
+      thisMainPage.dom.generalImgList.order.insertAdjacentHTML('afterbegin', genImg);
     }
-
-    /*gallery*/
-
-    thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
-    const row1 = document.createElement('div');
-    row1.classList.add('row1');
-    const row2 = document.createElement('div');
-    row2.classList.add('row2');
-    thisMainPage.dom.gallery.appendChild(row1);
-    thisMainPage.dom.gallery.appendChild(row2);
-
-    thisMainPage.images.gallery.images.filter((img) => {
-      if(thisMainPage.images.gallery.images.indexOf(img) <= 2){
-        row1.innerHTML += img;
-      } else {
-        row2.innerHTML += img;
-      }
-    });
+    if(thisMainPage.images.general.images[1]){
+      const genImg = thisMainPage.images.general.images[1];
+      thisMainPage.dom.generalImgList.book.insertAdjacentHTML('afterbegin', genImg);
+    }
 
     /* carousel*/
 
@@ -100,10 +89,7 @@ class MainPage {
     thisMainPage.dom.carousel.slide1 = document.querySelector('.slide1');
     thisMainPage.dom.carousel.slide2 = document.querySelector('.slide2');
     thisMainPage.dom.carousel.slide3 = document.querySelector('.slide3');
-    console.log('thisMainPage.dom.carousel.slide1', thisMainPage.dom.carousel.slide1);
 
-
-    console.log('thisMainPage.dom.carousel', thisMainPage.dom.carousel);
     if(thisMainPage.dom.carousel.slide1){
       const carImg = '<div class="image">' + thisMainPage.images.carousel.images[0] + '</div>';
       // thisMainPage.dom.carousel.slide1.innerHTML += carImg;
@@ -119,6 +105,25 @@ class MainPage {
     }
 
     thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
+
+    /*gallery*/
+   
+    //   thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
+    //   const row1 = document.createElement('div');
+    //   row1.classList.add('row1');
+    //   const row2 = document.createElement('div');
+    //   row2.classList.add('row2');
+    //   thisMainPage.dom.gallery.appendChild(row1);
+    //   thisMainPage.dom.gallery.appendChild(row2);
+
+  //   thisMainPage.images.gallery.images.filter((img) => {
+  //     if(thisMainPage.images.gallery.images.indexOf(img) <= 2){
+  //       row1.innerHTML += img;
+  //     } else {
+  //       row2.innerHTML += img;
+  //     }
+  //   });
+  //   console.log('thisMainPage.dom.gallery', thisMainPage.dom.gallery);
   }
 }
 

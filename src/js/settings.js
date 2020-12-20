@@ -26,7 +26,7 @@ export const select = {
     carouselDiv: '.carousel-wrapper',
   },
   mainGallery: {
-    gallery: '.gallery-images',
+    gallery: '.gallery-wrapper',
   },
   menuProduct: {
     clickable: '.product__header',

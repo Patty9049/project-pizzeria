@@ -18,12 +18,12 @@
     {
       "class": "gallery",
       "images": [
-        "<img class=\"active gall1-img\" src=\"images/main-page/pizza-4.jpg\">",
-        "<img class=\"active gall1-img\" src=\"images/main-page/pizza-5.jpg\">",
-        "<img class=\"active gall1-img\" src=\"images/main-page/pizza-6.jpg\">",
-        "<img class=\"active gall1-img\" src=\"images/main-page/pizza-7.jpg\">",
-        "<img class=\"active gall1-img\" src=\"images/main-page/pizza-8.jpg\">",
-        "<img class=\"active gall1-img\" src=\"images/main-page/pizza-9.jpg\">"
+        "<img class=\"active img\" src=\"images/main-page/pizza-4.jpg\">",
+        "<img class=\"active img\" src=\"images/main-page/pizza-5.jpg\">",
+        "<img class=\"active img\" src=\"images/main-page/pizza-6.jpg\">",
+        "<img class=\"active img\" src=\"images/main-page/pizza-7.jpg\">",
+        "<img class=\"active img\" src=\"images/main-page/pizza-8.jpg\">",
+        "<img class=\"active img\" src=\"images/main-page/pizza-9.jpg\">"
       ]
     }
   ],
