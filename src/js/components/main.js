@@ -1,4 +1,4 @@
-import {settings, select, templates} from '../settings.js';
+import {settings, select, templates,} from '../settings.js';
 import utils from '../utils.js';
 
 
@@ -7,7 +7,6 @@ class MainPage {
     const thisMainPage = this;
     thisMainPage.render(wrapper);
     thisMainPage.getData();
-    thisMainPage.links();
   }
   render(wrapper){
     const thisMainPage = this;
@@ -24,8 +23,6 @@ class MainPage {
     thisMainPage.dom.generalImgList.book = document.querySelector('.general__book');
 
     thisMainPage.dom.images = {};
-    console.log('thisMainPage', thisMainPage);
-    console.log('generatedDOM', generatedDOM);
   }
   getData() {
     const thisMainPage = this;
@@ -51,29 +48,6 @@ class MainPage {
     thisMainPage.images.gallery = gallery;
     thisMainPage.dom.gallery = document.querySelector(select.mainGallery.gallery);
 
-    // METODA NA EL Z MAINPAGE.DATA?
-    // for(let item of thisMainPage.data){
-    //   console.log('ITEM', item);
-    //   const name2 = item.class;
-    //   console.log('name', name);
-    //   const $(name2) = {
-    //     class: item.class,
-    //  images: item.images,
-    //   }
-    // }
-    // const MainDataSections = thisMainPage.data.map((el) => {
-    //   return (el.class = {
-    //     class: el.class,
-    //     images: el.images
-    //   });
-    // });
-    // console.log('mainDataSections', MainDataSections);
-
-    /*general*/
-
-    console.log('thisMainPage.dom.generalImgList.order', thisMainPage.dom.generalImgList.order);
-    console.log('thisMainPage.dom.generalImgList.book', thisMainPage.dom.generalImgList.book);
-
     if(thisMainPage.images.general.images[0]){
       const genImg = thisMainPage.images.general.images[0];
       thisMainPage.dom.generalImgList.order.insertAdjacentHTML('afterbegin', genImg);
@@ -82,7 +56,6 @@ class MainPage {
       const genImg = thisMainPage.images.general.images[1];
       thisMainPage.dom.generalImgList.book.insertAdjacentHTML('afterbegin', genImg);
     }
-
 
     /* carousel*/
 
@@ -93,7 +66,6 @@ class MainPage {
 
     if(thisMainPage.dom.carousel.slide1){
       const carImg = '<div class="image">' + thisMainPage.images.carousel.images[0] + '</div>';
-      // thisMainPage.dom.carousel.slide1.innerHTML += carImg;
       thisMainPage.dom.carousel.slide1.insertAdjacentHTML('afterbegin', carImg);
     }
     if(thisMainPage.dom.carousel.slide2){
@@ -108,20 +80,34 @@ class MainPage {
     thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
   }
 
-  links() {
-    const thisMainPage = this;
-    console.log('window.location', window.location);
-    console.log('window.location.hash', window.location.hash);
-    thisMainPage.dom.generalImgList.order.addEventListener('click', function(e){
-      console.log('ORDER');
-      const clickedElement = this;
+  // links() {
+  //   const thisMainPage = this;
+  //   console.log('window.location', window.location);
+  //   console.log('window.location.hash', window.location.hash);
+  //   thisMainPage.dom.generalImgList.order.addEventListener('click', function(){
+  //     console.log('ORDER');
+  //     const clickedElement = this;
 
-      const lastPart = clickedElement.getAttribute('id');
-      console.log('lastPart', lastPart);
-      const newPart = '#/' + lastPart;
-      console.log('newPart', newPart);
-    });
-  }
+  //     const clickId = clickedElement.getAttribute('id');
+  //     console.log('clickId', clickId);
+  //     // const newPart = '#/' + clickId;
+  //     // console.log('newPart', newPart);
+  //     window.location.hash = '#/' + clickId;
+
+  //   });
+  // }
+  // activateSubpage(clickId){
+  //   const thisApp = this;
+  //   for(let page of thisApp.pages){
+  //     page.classList.toggle(classNames.pages.active, page.id == clickId);
+  //   }
+  //   for(let link of thisApp.navLinks){
+  //     link.classList.toggle(
+  //       classNames.nav.active,
+  //       link.getAttribute('href') == '#' + clickId
+  //     );
+  //   }
 }
+
 
 export default MainPage;

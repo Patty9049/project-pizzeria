@@ -18,12 +18,14 @@
 }
 
 .general__order, .general__book {
+  margin: 3px;
   position: relative;
   height: 100px;
   width: 100%;
 
   img {
     position: absolute;
+    margin: 2px;
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -115,17 +117,16 @@
   width: 100%;
 }
 
-.image {
-  border-radius: $radius;
-  min-width: 193px;
-  min-height: 193px;
-}
+// .image {
+//   border-radius: $radius;
+//   min-width: 193px;
+//   min-height: 193px;
+// }
 
 img {
   border-radius: $radius;
-  padding: 3px;
-  height: 180px;
-  width: 180px;
+  height: 190px;
+  width: 190px;
   object-fit: cover;
 }
 
@@ -160,7 +161,6 @@ img {
     height: 180px;
     width: 180px;
     object-fit: cover;
-
   }
 
   .img-container {
@@ -198,6 +198,7 @@ img {
         height: 40%;
       }
     }
+
     .fa-heart {
       color: $color-danger;
     }
@@ -205,6 +206,7 @@ img {
 
   .img-container:hover .overlay {
     opacity: 0.5;
+    transition: $transition;
   }
 
   .img-container:hover p {
