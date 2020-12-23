@@ -95,7 +95,6 @@ class Booking {
         const orange = 'orange';
         const green = 'green';
 
-
         if(dElem == thisBooking.datePicker.dom.input.value){
           if(thisBooking.booked[dElem][hElem].length >= 3){
             thisBooking.colorValues.push(red);
@@ -112,10 +111,37 @@ class Booking {
 
           const RSFill =  thisBooking.dom.hourPicker.querySelector('.rangeSlider__horizontal').style.background = `linear-gradient(to right, ${colorsToString})`;
           console.log('RSFill', RSFill);
-
         }
       }
     }
+    thisBooking.dom.datePicker.addEventListener('change', function(){
+      for(let dElem in thisBooking.booked){
+        thisBooking.colorValues = [];
+        for(let hElem in thisBooking.booked[dElem]){
+
+          const red = 'red';
+          const orange = 'orange';
+          const green = 'green';
+
+          if(dElem == thisBooking.datePicker.dom.input.value){
+            if(thisBooking.booked[dElem][hElem].length >= 3){
+              thisBooking.colorValues.push(red);
+            } else if(thisBooking.booked[dElem][hElem].length == 2){
+              thisBooking.colorValues.push(orange);
+            }else if(thisBooking.booked[dElem][hElem] <= 1 || thisBooking.booked[dElem] == null ){
+              thisBooking.colorValues.push(green);
+            } else {
+              thisBooking.colorValues.push(green);
+            }
+            const colorsToString = thisBooking.colorValues.join(', ');
+            console.log('colorsToString', colorsToString);
+            const RSFill =  thisBooking.dom.hourPicker.querySelector('.rangeSlider__horizontal').style.background = `linear-gradient(to right, ${colorsToString})`;
+            console.log('RSFill', RSFill);
+          }
+        }
+      }
+
+    });
   }
 
   makeBooked(date, hour, duration, table) {
