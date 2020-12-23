@@ -79,34 +79,6 @@ class MainPage {
 
     thisMainPage.dom.carousel = document.querySelector(select.mainCarousel.carouselDiv);
   }
-
-  // links() {
-  //   const thisMainPage = this;
-  //   console.log('window.location', window.location);
-  //   console.log('window.location.hash', window.location.hash);
-  //   thisMainPage.dom.generalImgList.order.addEventListener('click', function(){
-  //     console.log('ORDER');
-  //     const clickedElement = this;
-
-  //     const clickId = clickedElement.getAttribute('id');
-  //     console.log('clickId', clickId);
-  //     // const newPart = '#/' + clickId;
-  //     // console.log('newPart', newPart);
-  //     window.location.hash = '#/' + clickId;
-
-  //   });
-  // }
-  // activateSubpage(clickId){
-  //   const thisApp = this;
-  //   for(let page of thisApp.pages){
-  //     page.classList.toggle(classNames.pages.active, page.id == clickId);
-  //   }
-  //   for(let link of thisApp.navLinks){
-  //     link.classList.toggle(
-  //       classNames.nav.active,
-  //       link.getAttribute('href') == '#' + clickId
-  //     );
-  //   }
 }
 
 
