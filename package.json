@@ -1,6 +1,9 @@
 {
     "name": "fer-07-project",
     "version": "1.0.0",
+    "engines": {
+        "node": "12.x"
+    },
     "description": "",
     "main": "index.html",
     "scripts": {
@@ -30,10 +33,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "flatpickr": "^4.6.6",
-        "json-server": "^0.16.3",
-        "rangeslider-pure": "^0.4.11",
-        "slick-carousel": "^1.8.1"
+        "json-server": "^0.16.3"
     },
     "devDependencies": {
         "autoprefixer-cli": "^1.0.0",
